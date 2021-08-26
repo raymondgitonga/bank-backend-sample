@@ -1,0 +1,16 @@
+postgres:
+	docker run --name postgres13.4 -p 5432:5432 -e POSTGRES_USER=owner -e POSTGRES_PASSWORD=password -d postgres:13.4-alpine
+
+createdb:
+	docker exec -it postgres13.4 createdb --username=owner --owner=owner bank
+
+dropdb:
+	docker exec -it postgres13.4 dropdb bank
+
+migrateup:
+	migrate -path db/migration -database "postgresql://owner:password@localhost:5432/bank?sslmode=disable" -verbose up
+
+migratedown:
+	migrate -path db/migration -database "postgresql://owner:password@localhost:5432/bank?sslmode=disable" -verbose down
+
+.PHONY:postgres createdb dropdb migrateup migratedown
