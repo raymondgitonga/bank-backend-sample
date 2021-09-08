@@ -52,7 +52,7 @@ func TestUpdateAccount(t *testing.T) {
 	account1 := createRandomAccount(t)
 
 	arg := UpdateAccountParams{account1.ID, util.RandomMoney()}
-	err := testQueries.UpdateAccount(context.Background(), arg)
+	_, err := testQueries.UpdateAccount(context.Background(), arg)
 
 	account2, err1 := testQueries.GetAccount(context.Background(), account1.ID)
 
